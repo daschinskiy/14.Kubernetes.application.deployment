@@ -1,0 +1,13 @@
+name: Build and Deploy
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build -t ghcr.io/daschinskiy/jenkins-custom ./docker
+      - name: Login to GHCR
+        run: echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u daschinskiy --password-stdin
+      - name: Push Docker image
+        run: docker push ghcr.io/daschinskiy/jenkins-custom
