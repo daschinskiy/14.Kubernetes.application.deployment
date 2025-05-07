@@ -5,9 +5,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Build Docker image
         run: docker build -t ghcr.io/daschinskiy/jenkins-custom ./docker
+        
       - name: Login to GHCR
-        run: echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u daschinskiy --password-stdin
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_TOKEN }}
+      
       - name: Push Docker image
         run: docker push ghcr.io/daschinskiy/jenkins-custom
