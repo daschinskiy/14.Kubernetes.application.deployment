@@ -1,6 +1,11 @@
 jenkins:
   image: "ghcr.io/daschinskiy/jenkins-custom:latest"
   host: "jenkins.k8s-7.sa"
-  storage:
-    nfsServer: "192.168.56.111"
-    nfsPath: "/mnt/jenkins-data"
+  service:
+    type: ClusterIP
+    port: 8080
+  plugins:
+    - name: kubernetes
+      version: latest
+    - name: blueocean
+      version: latest

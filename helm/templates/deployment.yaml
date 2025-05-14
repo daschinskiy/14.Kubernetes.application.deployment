@@ -14,6 +14,20 @@ spec:
     spec:
       containers:
       - name: jenkins
-        image: jenkins/jenkins:lts
+        image: {{ .Values.jenkins.image }}
         ports:
-        - containerPort: 8080
+        - containerPort: {{ .Values.jenkins.service.port }}
+        volumeMounts:
+        - name: jenkins-data
+          mountPath: /var/jenkins_home
+        - name: plugins
+          mountPath: /usr/share/jenkins/ref/plugins.txt
+          subPath: plugins.txt
+      volumes:
+      - name: jenkins-data
+        emptyDir: {}
+      - name: plugins
+        configMap:
+          name: jenkins-plugins
+      - name: jenkins-data
+        emptyDir: {}

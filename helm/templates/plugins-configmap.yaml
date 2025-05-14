@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jenkins-plugins
+data:
+  plugins.txt: |
+    {{- include "jenkins.plugins" . | indent 4 }}
