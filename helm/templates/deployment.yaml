@@ -12,6 +12,8 @@ spec:
       labels:
         app: jenkins
     spec:
+      imagePullSecrets:  # <-- Добавьте этот блок
+      - name: ghcr-secret
       containers:
       - name: jenkins
         image: {{ .Values.jenkins.image }}
